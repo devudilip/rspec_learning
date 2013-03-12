@@ -61,5 +61,38 @@ $ rails generate controller StaticPages home help --no-test-framework
 
 
 
+Example on static pages:
+
+ rails generate integration_test static_pages
+      invoke  rspec
+      create    spec/requests/static_pages_spec.rb
+
+      Code to test the contents of the Home page. 
+spec/requests/static_pages_spec.rb
+
+
+require 'spec_helper'
+
+describe "Static pages" do
+
+  describe "Home page" do
+
+    it "should have the content 'Sample App'" do
+      visit '/static_pages/home'
+      page.should have_content('Sample App')
+    end
+  end
+end
+
+
+The code in Listing 3.9 is pure Ruby, but even if you’ve studied Ruby before it probably won’t look very familiar. This is because RSpec uses the general malleability of Ruby to define a domain-specific language (DSL) built just for testing.
+
+
+
+To run first test
+
+$ bundle exec rspec spec/requests/static_pages_spec.rb
+
+
 
 

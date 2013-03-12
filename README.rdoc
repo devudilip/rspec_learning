@@ -1,0 +1,65 @@
+rails new sample_app --skip-test-unit
+
+
+Here the --skip-test-unit option to the rails command tells Rails not to generate a test directory associated with the default Test::Unit framework. This is not because we won’t be writing tests; on the contrary, starting in Section 3.2 we will be using an alternate testing framework called RSpec to write a thorough test suite.
+
+
+group :development, :test do
+  gem 'sqlite3'
+  gem 'rspec-rails', '2.11.0'
+end
+group :test do
+  gem 'capybara', '1.1.2'
+end
+
+
+This includes rspec-rails in development mode so that we have access to RSpec-specific generators, and it includes it in test mode in order to run the tests. We don’t have to install RSpec itself because it is a dependency of rspec-rails and will thus be installed automatically. We also include the Capybara gem, which allows us to simulate a user’s interaction with the sample application using a natural English-like syntax
+
+$ bundle update
+$ bundle install --without production
+
+
+
+Next, we need to configure Rails to use RSpec in place of Test::Unit. This can be accomplished with rails generate rspec:install:
+
+$ rails generate rspec:install
+
+ create  .rspec
+      create  spec
+      create  spec/spec_helper.rb
+
+After this if we create controller
+
+>rails g controller static_pages
+      create  app/controllers/static_pages_controller.rb
+      invoke  erb
+      create    app/views/static_pages
+      invoke  rspec
+      create    spec/controllers/static_pages_controller_spec.rb
+      invoke  helper
+      create    app/helpers/static_pages_helper.rb
+      invoke    rspec
+      create      spec/helpers/static_pages_helper_spec.rb
+      invoke  assets
+      invoke    coffee
+      create      app/assets/javascripts/static_pages.js.coffee
+      invoke    scss
+      create      app/assets/stylesheets/static_pages.css.scss
+
+
+
+How do I generate specs for existing controllers?
+
+$rails g rspec:controller ControllerName
+$rails g rspec:model ModelName
+
+
+Generating a StaticPages controller(if we dont need tests for any controller like static pages)
+
+$ rails generate controller StaticPages home help --no-test-framework
+
+
+
+
+
+
